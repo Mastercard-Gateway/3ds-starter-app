@@ -1,0 +1,5 @@
+{
+  "threeds.server.port": 8085,
+  "threeds.sandbox.url": "https://sandbox.uat.simplify.com/v1/api",
+  "threeds.live.url": "https://api.uat.simplify.com/v1/api"
+}

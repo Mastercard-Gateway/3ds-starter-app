@@ -1,0 +1,13 @@
+h1 {
+  font-size: 24px;
+}
+
+#secure3d-frame {
+  width: 700px;
+  height: 500px;
+  display: none;
+}
+
+#simplify-success {
+  display: none;
+}
