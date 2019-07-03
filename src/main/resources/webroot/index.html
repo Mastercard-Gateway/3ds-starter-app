@@ -15,7 +15,7 @@
         <div class="form-group">
           <label for="cc-number" class="col-sm-3 control-label">Credit Card Number</label>
           <div class="col-sm-3">
-            <input id="cc-number" class="form-control" name="cc_number" type="text" maxlength="16" autocomplete="off" value="" autofocus>
+            <input id="cc-number" class="form-control" name="cc_number" type="text" maxlength="16" autocomplete="off" value="5123450000000008" autofocus>
           </div>
         </div>
           <div class="form-group">
@@ -40,11 +40,10 @@
                 </div>
                 <div class="col-xs-2">
                   <select class="form-control" id="cc-exp-year">
-                    <option value="18">2018</option>
-                    <option value="19">2019</option>
-                    <option value="20">2020</option>
                     <option value="21">2021</option>
                     <option value="22">2022</option>
+                    <option value="22">2023</option>
+                    <option value="22">2024</option>
                   </select>
                 </div>
               </div>
@@ -54,29 +53,25 @@
         <div class="form-group">
           <label for="cc-cvc"  class="col-sm-3 control-label">CVC</label>
           <div class="col-sm-1">
-            <input id="cc-cvc" class="form-control" type="text" maxlength="4" autocomplete="off" value="">
+            <input id="cc-cvc" class="form-control" type="text" maxlength="4" autocomplete="off" value="123">
           </div>
         </div>
           <div class="form-group">
           <label for="amount"  class="col-sm-3 control-label">Amount</label>
           <div class="col-sm-2">
-            <input id="amount" class="form-control" type="text" maxlength="8" autocomplete="off" value="">
+            <input id="amount" class="form-control" type="text" maxlength="8" autocomplete="off" value="1000">
           </div>
           <label for="currency"  class="col-sm-1 control-label">Currency</label>
             <div class="col-xs-2">
               <select class="form-control" id="currency">
+                <option value="AUD">AUD</option>
                 <option value="QAR">QAR</option>
                 <option value="USD">USD</option>
-                <option value="AUD">AUD</option>
                 <option value="GBP">GBP</option>
                 <option value="INR">INR</option>
               </select>
             </div>
-          <!--<div class="col-sm-2">-->
-            <!--<input id="currency" class="form-control" type="text" maxlength="4" autocomplete="off" value="">-->
-          <!--</div>-->
           </div>
-
 
         <div class="col-sm-offset-3 col-sm-9">
           <button id="process-payment-btn" type="submit" class="btn btn-success">Process Payment</button>
