@@ -133,5 +133,110 @@ public class PaymentProcessorVerticle extends AbstractVerticle {
                 message.fail(500, errorMessage.toString());
             }
         });
+
+        eb.<JsonObject>consumer("threeds.payment.emv.create", message -> {
+
+            log.info("Processing EMV payment Create...");
+            JsonObject body = message.body();
+            JsonObject response = new JsonObject();
+
+            String cardNumber = body.getString("card.number");
+            String cvc = body.getString("card.cvc");
+            String expiryMonth = body.getString("card.expiryMonth");
+            String expiryYear = body.getString("card.expiryYear");
+            String currency = body.getString("currency");
+            long amount = body.getLong("amount");
+
+
+            try {
+
+                CardToken cardToken = CardToken.create(new PaymentsMap()
+                        .set("card.addressCity", "OFallon")
+                        .set("card.addressState", "MO")
+                        .set("card.cvc", cvc)
+                        .set("card.expMonth", expiryMonth)
+                        .set("card.expYear", expiryYear)
+                        .set("card.number", cardNumber)
+                        .set("secure3DRequestData.amount", amount)
+                        .set("secure3DRequestData.currency", currency)
+                        .set("secure3DRequestData.description", UUID.randomUUID().toString())
+                        .set("authenticatePayer", true)
+                );
+
+                String token = cardToken.get("id").toString();
+                log.info("Create Token = " + token);
+
+                Object authentication = cardToken.get("authentication.redirectHtml");
+
+                if (authentication != null) {
+                    JsonObject threeSecureJson = new JsonObject();
+                    threeSecureJson.put("redirectHtml", authentication);
+
+                    response.put("3dsecure", threeSecureJson);
+                }
+
+                response.put("token", token);
+                response.put("success", true);
+                response.put("currency", currency);
+
+                message.reply(response);
+
+            } catch (Exception e) {
+                log.error("Error processing card token create", e);
+
+                JsonObject errorMessage = new JsonObject();
+                errorMessage.put("success", false);
+                errorMessage.put("message", e.getMessage());
+                message.fail(500, errorMessage.toString());
+            }
+        });
+
+        eb.<JsonObject>consumer("threeds.payment.emv.update", message -> {
+
+            log.info("Processing EMV payment update...");
+            JsonObject body = message.body();
+            JsonObject response = new JsonObject();
+
+            try {
+
+                String token = body.getString("token");
+                String currency = body.getString("currency");
+                String browser = body.getString("browser");
+                String timezone = body.getString("timezone");
+
+                CardToken cardTokenUpdate = CardToken.find(token);
+                log.info("Update Token = " + cardTokenUpdate);
+
+                cardTokenUpdate.set("device.browser", browser);
+                //Note device.ipAddress needs to be payer's ip address
+                cardTokenUpdate.set("device.ipAddress", "127.0.0.1");
+                cardTokenUpdate.set("device.timeZone", timezone);
+
+                cardTokenUpdate = cardTokenUpdate.update();
+
+                Object authentication = cardTokenUpdate.get("authentication.redirectHtml");
+
+                if (authentication != null) {
+                    JsonObject threeSecureJson = new JsonObject();
+                    threeSecureJson.put("redirectHtml", authentication);
+
+                    response.put("3dsecure", threeSecureJson);
+                }
+
+                response.put("token", token);
+                response.put("success", true);
+                response.put("currency",currency);
+
+                message.reply(response);
+
+            } catch (Exception e) {
+                log.error("Error processing card token update", e);
+
+                JsonObject errorMessage = new JsonObject();
+                errorMessage.put("success", false);
+                errorMessage.put("message", e.getMessage());
+                message.fail(500, errorMessage.toString());
+            }
+        });
     }
 }
