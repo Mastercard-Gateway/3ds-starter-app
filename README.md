@@ -6,6 +6,8 @@
   <li>Return 3DS data in the response to be processed by the merchant</li>
 </ul>
 
+<p>The EMV 3DS transaction can be performed uisng the Enable EMV 3DS checkbox.</p>
+
 * <h3><b>Merchant Setup</b></h3>
 
   For 3DS to be active:

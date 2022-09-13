@@ -40,10 +40,9 @@
                 </div>
                 <div class="col-xs-2">
                   <select class="form-control" id="cc-exp-year">
-                    <option value="21">2021</option>
-                    <option value="22">2022</option>
-                    <option value="22">2023</option>
-                    <option value="22">2024</option>
+                    <option value="25">2025</option>
+                    <option value="26">2026</option>
+                    <option value="27">2027</option>
                   </select>
                 </div>
               </div>
@@ -71,6 +70,10 @@
                 <option value="INR">INR</option>
               </select>
             </div>
+            <label for="emv3ds" class="col-sm-1 control-label">Enable EMV 3DS</label><br>
+            <div class="col-sm-2">
+              <input type="checkbox" class="form-check-input"  id="emv3ds" name="EMV 3DS" value="emv3ds">
+            </div>
           </div>
 
         <div class="col-sm-offset-3 col-sm-9">
@@ -82,6 +85,8 @@
       Payment was processed successfully.
     </div>
     <iframe name="secure3d-frame" id="secure3d-frame"></iframe>
+    <iframe name="challengeFrame" id="challengeFrame"></iframe>
+    <iframe name="methodFrame" id="methodFrame"></iframe>
     <script src="/js/process.js"></script>
   </body>
 </html>
